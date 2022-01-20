@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Product example · Bootstrap v5.1</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/product/">
+  <!-- Bootstrap core CSS -->
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  <!-- Custom styles for this template -->
+  <link href="product.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header class="site-header sticky-top py-1">
+
+    <nav class="container align-items-center d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2" href="#" aria-label="Product">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+          stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img"
+          viewBox="0 0 24 24">
+          <title>Product</title>
+          <circle cx="12" cy="12" r="10" />
+          <path
+            d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />
+        </svg>
+      </a>
+
+
+      <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+            {{#if Loggedin}}
+            <li class="dropdown-item">Hi {{Username}}</li>
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            {{else}}
+            <li><a class="dropdown-item dark" href="/">Login</a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li><a class="dropdown-item" href="/register">Sign In</a></li>
+            {{/if}}
+          </ul>
+        </li>
+      </ul>
+
+    </nav>
+  </header>
+
+  <main>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 fw-normal">Welcome to <strong>Rolan</strong> store</h1>
+        <p class="lead fw-normal">TOP QUALITY PRODUCTS</p>
+        <a class="btn btn-outline-secondary" href="#">Coming soon</a>
+      </div>
+      <div class="product-device shadow-sm d-none d-md-block"></div>
+      <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+
+      {{#each query}}
+      <div class="bg-dark me-md-1 pt-1 px-1 pt-md-2 px-md-2 text-center text-white overflow-hidden">
+
+        <div class="my-3 py-3 item">
+
+          <h2 class="display-7 title">{{name}}</h2>
+          <p class="lead">Price:
+          <p class="price">${{price}}</p>
+          </p>
+
+          <button id="btn_buy" class="btn btn-light">Buy</button>
+          <button id="btn_add" class="btn btn-light addToCart">Add to cart</button>
+        </div>
+
+      </div>
+      {{/each}}
+
+
+
+      <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
+        <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+          <svg class="bi me-2" width="30" height="24">
+            <use xlink:href="#bootstrap" />
+          </svg>
+          <span class="fs-5 fw-semibold"><i class="fas fa-shopping-cart"></i> Shopping Cart</span>
+        </a>
+
+        <div class="container_cart"></div>
+
+        {{#if Loggedin}}
+        <form id="form">
+          <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+            <h1 class="lead fw-normal">TOTAL: <p class="lead fw-normal total"></p>
+            </h1>
+            <button type="submit" class="btn btn-primary">BUY</button>
+          </div>
+        </form>
+        {{else}}
+
+        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+          <h1 class="lead fw-normal">TOTAL: <p class="lead fw-normal total"></p>
+          </h1>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">BUY</button>
+        </div>
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sign up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form method = "POST" action="/create_user">
+                  <label for="inputUser">Username</label>
+                  <input name = "username" id = "inputUser" class = "form-control" type="text">
+
+                  <label for="inputUser">Email</label>
+                  <input id="inputUser" name = "email" class="form-control" type="email">
+
+                  <label for="inputUser">Password</label>
+                  <input id="inputUser" name = "password" class="form-control" type="password">
+
+                  <label for="inputUser">Confirm password</label>
+                  <input id="inputUser" name = "password_confirm" class="form-control" type="password">
+                
+                </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </form>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </main>
+
+  <footer class="container py-5">
+    <div class="row">
+      <div class="col-12 col-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+          stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img"
+          viewBox="0 0 24 24">
+          <title>Product</title>
+          <circle cx="12" cy="12" r="10" />
+          <path
+            d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />
+        </svg>
+        <small class="d-block mb-3 text-muted">&copy; 2017–2021</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Cool stuff</a></li>
+          <li><a class="link-secondary" href="#">Random feature</a></li>
+          <li><a class="link-secondary" href="#">Team feature</a></li>
+          <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+          <li><a class="link-secondary" href="#">Another one</a></li>
+          <li><a class="link-secondary" href="#">Last time</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Resource name</a></li>
+          <li><a class="link-secondary" href="#">Resource</a></li>
+          <li><a class="link-secondary" href="#">Another resource</a></li>
+          <li><a class="link-secondary" href="#">Final resource</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Business</a></li>
+          <li><a class="link-secondary" href="#">Education</a></li>
+          <li><a class="link-secondary" href="#">Government</a></li>
+          <li><a class="link-secondary" href="#">Gaming</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Team</a></li>
+          <li><a class="link-secondary" href="#">Locations</a></li>
+          <li><a class="link-secondary" href="#">Privacy</a></li>
+          <li><a class="link-secondary" href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+  <script src="shopping_cart.js"></script>
+
+</body>
+
+</html>

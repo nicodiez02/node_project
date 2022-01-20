@@ -5,6 +5,13 @@
 
 <head>
     <title>Tables - SB Admin</title>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
+        integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
 </head>
 
 <body class="sb-nav-fixed">
@@ -14,7 +21,7 @@
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-      
+
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
             <li class="nav-item dropdown">
@@ -120,12 +127,81 @@
                         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                         <li class="breadcrumb-item active">Tables</li>
                     </ol>
-        
+
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
                             Users Table
                         </div>
+
+                        <div class="ml-4 mt-3">
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#exampleModalCenter">Create</button>
+                        </div>
+
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Create
+                                            {{alertTitle}} user</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form_create">
+
+                                            <div class="form-floating mb-3">
+                                                <input id="username_c" name="username" class="form-control"
+                                                    id="inputFirstName" type="text" placeholder="Enter Username" />
+                                                <label for="inputFirstName">Username</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <input id="email_c" name="email" class="form-control" id="inputEmail"
+                                                    type="email" placeholder="name@example.com" />
+                                                <label for="inputEmail">Email address</label>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input id="password" name="password" class="form-control"
+                                                            id="inputPassword" type="password"
+                                                            placeholder="Create a password" />
+                                                        <label for="inputPassword">Password</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input id="password_c" name="password_confirm"
+                                                            class="form-control" id="inputPasswordConfirm"
+                                                            type="password" placeholder="Confirm password" />
+                                                        <label for="inputPasswordConfirm">Confirm Password</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <input id="rol_c" name="rol" class="form-control" id="inputRol"
+                                                    type="text" placeholder="Rol" />
+                                                <label for="inputRol">Rol</label>
+                                            </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Discard</button>
+                                        <button id = "btn_close" type="submit" class="btn btn-primary">Create</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="card-body">
                             <table id="tablaArticulos" class="table table-striped table-bordered" style="width:100%">
@@ -146,41 +222,42 @@
                                         <th></th>
                                     </tr>
                                 </tbody>
-                                </table>
+                            </table>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <form id="form">
-                                                <div class="modal-body">
-                                                    <input id="id" hidden>
-
-                                                    <label for="" class="col-form-label">Usuario:</label>
-                                                    <input name = "username" type="text" class="form-control" id="username">
-
-                                                    <label for="" class="col-form-label">Email</label>
-                                                    <input name = "email" id="email" type="text" step="0.01" class="form-control">
-
-                                                    <label for="" class="col-form-label">Rol</label>
-                                                    <input name = "rol" id="rol" type="text" class="form-control">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </form>
+                            <!-- Modal -->
+                            <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
+                                        <form id="form">
+                                            <div class="modal-body">
+                                                <input id="id" hidden>
+
+                                                <label for="" class="col-form-label">Usuario:</label>
+                                                <input name="username" type="text" class="form-control" id="username">
+
+                                                <label for="" class="col-form-label">Email</label>
+                                                <input name="email" id="email" type="text" step="0.01"
+                                                    class="form-control">
+
+                                                <label for="" class="col-form-label">Rol</label>
+                                                <input name="rol" id="rol" type="text" class="form-control">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,10 +292,6 @@
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
         crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"
-        integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d"
-        crossorigin="anonymous"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.all.min.js"></script>
 
     <script type="text/javascript" language="javascript"
@@ -227,15 +300,21 @@
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap5.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+        crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"
+            integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d"
+            crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function () {
+              
             let url = 'http://localhost:3001/tables_ajax/';
             let opcion = null;
-            let id, username, email, rol, row;
+            let id, username, email, rol, password, password_c, row;
 
-            //MOSTRAR
+
             let tablaArticulos = $('#tablaArticulos').DataTable({
                 "ajax": {
                     "url": url,
@@ -249,8 +328,27 @@
                     { "defaultContent": "<button type='button' class='btn btn-primary btn_edit' data-toggle='modal' data-target='#edit_modal'><i class='fas fa-edit'></i></button> <button class='btn btn-danger btn_delete'><i class='fas fa-trash - alt'></i> </button>" }
                 ]
             });
-                  
+
+    /*
+                function removeModal(target) {
+                    $(target).removeClass('in');
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                    $('body').css('padding-right', '');
+                    $(target).hide();
+                }
+
+                function addModal(target){
+                    $(target).addClass('in');
+                    $('.modal-backdrop').add();
+                    $('body').addClass('modal-open');
+                    $('body').css('padding-right', '');
+                    $(target).show();
+                }
+                */
+
             $(document).on("click", ".btn_edit", function () {
+              
                 row = $(this).closest("tr");
                 id = parseInt(row.find('td:eq(0)').text());
                 username = row.find('td:eq(1)').text();
@@ -294,6 +392,8 @@
                 email = $.trim($('#email').val());
                 rol = $.trim($('#rol').val());
 
+                console.log(id, username, email, rol)
+
                 $.ajax({
                     url: url + id,
                     method: 'put',
@@ -301,12 +401,78 @@
                     data: JSON.stringify({ ID: id, Username: username, Email: email, Rol: rol }),
                     success: function (data) {
                         tablaArticulos.ajax.reload(null, false);
+                       
+                    }
+                });
+
+                $('#exampleModalCenter').modal('hide');
+
+            });
+
+            $('#form_create').submit(function (e) {
+                e.preventDefault();
+
+                let username_c = $.trim($('#username_c').val());
+                let email_c = $.trim($('#email_c').val());
+                let rol_c = $.trim($('#rol_c').val());
+                let password = $.trim($('#password').val());
+                let password_c = $.trim($('#password_c').val());
+
+                $.ajax({
+                    url: 'http://localhost:3001/create_user',
+                    method: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ username: username_c, email: email_c, rol: rol_c, password: password, password_confirm: password_c, route: 'tables' }),
+                    success: function (data) {
+                        if (data.auth == false) {
+                        
+                             Swal.fire({
+                                title: 'Error',
+                                text: `The user ${data.username} already exist`,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                timer: false
+                            });
+
+                        } else if(data.password == false){
+
+                             Swal.fire({
+                                title: 'Warning',
+                                text: `The password doesnt match`,
+                                icon: 'warning',
+                                showConfirmButton: true,
+                                timer: false
+                            });
+
+                        }else if(data.fields == false){
+
+                             Swal.fire({
+                                title: 'Warning',
+                                text: `Complete all fields please`,
+                                icon: 'warning',
+                                showConfirmButton: true,
+                                timer: false
+                            });
+
+                        }else if(data.auth == true) {
+
+                            Swal.fire({
+                                title: 'Success',
+                                text: `User created succesfuly`,
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+
+                            tablaArticulos.ajax.reload(null, false);
+                            
+                        }
                     }
                 });
                 
-                
-                $('#edit_modal').modal('hide');
-            });
+
+                $('#exampleModalCenter').modal('hide');
+            })
         });
     </script>
 </body>
