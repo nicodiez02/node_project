@@ -10,11 +10,10 @@
                                     <h3 class="text-center font-weight-light my-4">Create Account</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" action="create_user">
+                                    <form id = "form">
 
                                         <div class="form-floating mb-3">
-                                            <input name="username" class="form-control" id="inputFirstName" type="text"
-                                                placeholder="Enter your first name" />
+                                            <input name="username" class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" />
                                             <label for="inputFirstName">Username</label>
                                         </div>
 
@@ -45,9 +44,10 @@
                                         </div>
                                         
                                         <div class="mt-4 mb-0">
-                                            <div class="d-grid"><button type="submit"
-                                                    class="btn btn-primary btn-block">Create Account</button></div>
-                                        </div>
+                                            <div class="d-grid"
+                                            ><button type="submit" class="btn btn-primary btn-block">Create Account</button
+                                            ></div>
+                                            </div>
                                     </form>
                                 </div>
                                 <div class="card-footer text-center py-3">
@@ -77,24 +77,80 @@
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{#if alert}}
-        <script>
-            Swal.fire({
-                title: '{{alertTitle}}',
-                text: '{{alertMessage}}',
-                icon: '{{alertIcon}}',
-                showConfirmButton: {{ showConfirmButton }},
-                timer: {{ time }}
-
-            }).then(() => {
-                    window.location = '{{ruta}}'
-                })
-        </script>
-    {{/if}}
-
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
+    <script src="./js/scripts.js"></script>
 
-    
+    <!-- AJAX IMPLEMENTATION-->
+    <script>
+        $(document).ready(function () {
+
+            $('#form').submit(function (e) {
+                e.preventDefault();
+
+                let username_c = $.trim($('#inputFirstName').val());
+                let email_c = $.trim($('#inputEmail').val());
+                let password = $.trim($('#inputPassword').val());
+                let password_c = $.trim($('#inputPasswordConfirm').val());
+                
+
+                $.ajax({
+                    url: 'http://localhost:3001/create_user',
+                    method: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ username: username_c, email: email_c, password: password, password_confirm: password_c}),
+                    success: function (data) {
+                        if (data.auth == false) {
+
+                            Swal.fire({
+                                title: 'Error',
+                                text: `The user ${data.username} already exist`,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                timer: false
+                            });
+
+                        } else if (data.password == false) {
+
+                            Swal.fire({
+                                title: 'Warning',
+                                text: `The password doesnt match`,
+                                icon: 'warning',
+                                showConfirmButton: true,
+                                timer: false
+                            });
+
+                        } else if (data.fields == false) {
+
+                            Swal.fire({
+                                title: 'Warning',
+                                text: `Complete all fields please`,
+                                icon: 'warning',
+                                showConfirmButton: true,
+                                timer: false
+                            });
+
+                        } else if (data.auth == true) {
+
+                            Swal.fire({
+                                title: 'Success',
+                                text: `User created succesfuly`,
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                
+                            }).then( () =>{
+                                 window.location.replace("/");
+                            })
+
+                            
+
+                        }
+                    }
+                });
+
+            })
+        });
+    </script>

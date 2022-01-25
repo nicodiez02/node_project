@@ -84,11 +84,9 @@
         <div class="my-3 py-3 item">
 
           <h2 class="display-7 title">{{name}}</h2>
-          <p class="lead">Price:
           <p class="price">${{price}}</p>
           </p>
 
-          <button id="btn_buy" class="btn btn-light">Buy</button>
           <button id="btn_add" class="btn btn-light addToCart">Add to cart</button>
         </div>
 
@@ -129,31 +127,52 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Sign up</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Create your account</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+
               <div class="modal-body">
-                <form method = "POST" action="/create_user">
-                  <label for="inputUser">Username</label>
-                  <input name = "username" id = "inputUser" class = "form-control" type="text">
+                <form id="form">
 
-                  <label for="inputUser">Email</label>
-                  <input id="inputUser" name = "email" class="form-control" type="email">
-
-                  <label for="inputUser">Password</label>
-                  <input id="inputUser" name = "password" class="form-control" type="password">
-
-                  <label for="inputUser">Confirm password</label>
-                  <input id="inputUser" name = "password_confirm" class="form-control" type="password">
-                
-                </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  <div class="form-floating mb-3">
+                    <input name="username" class="form-control" id="inputFirstName" type="text"
+                      placeholder="Enter your first name" />
+                    <label for="inputFirstName"><i class="fas fa-user-circle"></i> Username</label>
                   </div>
-                </form>
+
+                  <div class="form-floating mb-3">
+                    <input name="email" class="form-control" id="inputEmail" type="email"
+                      placeholder="name@example.com" />
+                    <label for="inputEmail"><i class="fas fa-envelope"></i> Email address</label>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3 mb-md-0">
+                        <input name="password" class="form-control" id="inputPassword" type="password"
+                          placeholder="Create a password" />
+                        <label for="inputPassword"> <i class="fas fa-key"></i> Password</label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3 mb-md-0">
+                        <input name="password_confirm" class="form-control" id="inputPasswordConfirm" type="password"
+                          placeholder="Confirm password" />
+                        <label for="inputPasswordConfirm"><i class="fas fa-key"></i> Confirm Password</label>
+                      </div>
+                    </div>
+
+                  </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -221,6 +240,30 @@
     crossorigin="anonymous"></script>
   <script src="shopping_cart.js"></script>
 
+  <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+  <script>
+    $(document).ready(function (){
+
+      $('#form').submit(function (e){
+
+        let user = trim($('#inputFirstName').val());
+        let email = trim($('#inputEmail').val());
+        let password = trim($('#inputPassword').val());
+        let password_confirm = trim($('#inputPasswordConfirm').val());
+
+        $.ajax({
+          url: 'http://localhost:3001/create_user',
+          method: 'post',
+          data: JSON.stringify({username: user, email: email, password: password, password_confirm: password_confirm, check: true}),
+          contentType: 'application/json',
+          success: function (data){
+            console.log(data);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
