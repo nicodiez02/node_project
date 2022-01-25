@@ -22,7 +22,7 @@
     }
   </style>
   <!-- Custom styles for this template -->
-  <link href="product.css" rel="stylesheet">
+  <link href="./css/product.css" rel="stylesheet">
 </head>
 
 <body>
@@ -49,7 +49,7 @@
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
             {{#if Loggedin}}
-            <li class="dropdown-item">Hi {{Username}}</li>
+            <li class="dropdown-item">Hi <strong>{{Username}}</strong></li>
             <li><a class="dropdown-item" href="/logout">Logout</a></li>
             {{else}}
             <li><a class="dropdown-item dark" href="/">Login</a></li>
@@ -238,7 +238,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
-  <script src="shopping_cart.js"></script>
+  <script src="./js/shopping_cart.js"></script>
 
   <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
