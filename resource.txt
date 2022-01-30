@@ -1,49 +1,25 @@
-#EDIT MODAL // form id = form
+<div class="row shoppingCartItem">
+              <div class="list-group list-group-flush border-bottom scrollarea item_cart">
 
-<input id="id" hidden>
+              <div href="#" class="list-group-item list-group-item-action py-3 lh-tight cart_item" aria-current="true">
+                <div class="d-flex w-100 align-items-center justify-content-between">
+                  <strong class="mb-1 product">${title.innerHTML}</strong>
 
-<label for="" class="col-form-label">Usuario:</label>
-<input name="username" type="text" class="form-control" id="username">
+                  <select class = "select_cart">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
 
-<label for="" class="col-form-label">Email</label>
-<input name="email" id="email" type="text" step="0.01" class="form-control">
-
-<label for="" class="col-form-label">Rol</label>
-<input name="rol" id="rol" type="text" class="form-control">
-
-#CREATE FORM
-
-                                            <div class="form-floating mb-3">
-                                                <input id="username_c" name="username" class="form-control" type="text"
-                                                    placeholder="Enter Username" />
-                                                <label for="username_c">Username</label>
-                                            </div>
-                        
-                                            <div class="form-floating mb-3">
-                                                <input id="email_c" name="email" class="form-control" type="email"
-                                                    placeholder="name@example.com" />
-                                                <label for="email_c">Email address</label>
-                                            </div>
-                        
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input id="password" name="password" class="form-control" type="password"
-                                                            placeholder="Create a password" />
-                                                        <label for="password">Password</label>
-                                                    </div>
-                                                </div>
-                        
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input id="password_c" name="password_confirm" class="form-control" type="password"
-                                                            placeholder="Confirm password" />
-                                                        <label for="password_c">Confirm Password</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                        
-                                            <div class="form-floating mb-3">
-                                                <input id="rol_c" name="rol" class="form-control" type="text" placeholder="Rol" />
-                                                <label for="rol_C">Rol</label>
-                                            </div>
+                </div>
+                <div class="col-10 mb-1 small product_price">${price.innerText}</div>
+                <button class = "buttonDelete btn btn-danger btn-sm" id = "btn_delete_item"><i class="far fa-trash-alt"></i></button>
+              </div>
+            </div>

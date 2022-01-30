@@ -78,22 +78,21 @@
 
     <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
 
-      {{#each query}}
+      {{#each Productos}}
       <div class="bg-dark me-md-1 pt-1 px-1 pt-md-2 px-md-2 text-center text-white overflow-hidden">
 
-        <div class="my-3 py-3 item">
+        <div id = "item" class="my-3 py-3 item">
 
-          <h2 class="display-7 title">{{name}}</h2>
-          <p class="price">${{price}}</p>
-          </p>
-
+          <h2 class="title">{{name}}</h2>
+          <p class="price pt-2">${{price}}</p>
+          <p hidden class = "price_id">{{price_id}}</p>
+  
+          
           <button id="btn_add" class="btn btn-light addToCart">Add to cart</button>
         </div>
 
       </div>
       {{/each}}
-
-
 
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
         <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
@@ -103,16 +102,19 @@
           <span class="fs-5 fw-semibold"><i class="fas fa-shopping-cart"></i> Shopping Cart</span>
         </a>
 
-        <div class="container_cart"></div>
+        <form action="/create-checkout-session" method="POST">
+          <div class="container_cart"></div>
 
         {{#if Loggedin}}
-        <form id="form">
+        
           <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
             <h1 class="lead fw-normal">TOTAL: <p class="lead fw-normal total"></p>
             </h1>
-            <button type="submit" class="btn btn-primary">BUY</button>
+            <button type="submit" id = "btn_buy" class="btn btn-primary">BUY</button>
           </div>
+
         </form>
+        
         {{else}}
 
         <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
@@ -256,12 +258,12 @@
           url: 'http://localhost:3001/create_user',
           method: 'post',
           data: JSON.stringify({username: user, email: email, password: password, password_confirm: password_confirm, check: true}),
-          contentType: 'application/json',
-          success: function (data){
-            console.log(data);
-          }
+          contentType: 'application/json'
         });
       });
+
+
+
     });
   </script>
 </body>
