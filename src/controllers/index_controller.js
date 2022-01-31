@@ -246,9 +246,12 @@ controller.create_checkout = async (req, res) => {
     res.redirect(303, session.url);
 }
 
-controller.get_checkout = (req,res) =>{
-    res.render('checkout');
+controller.get_success = (req,res) =>{
+    res.render('succes');
 }
 
+controller.get_cancel = (req,res) =>{
+    res.render('cancel');
+}
 
 export { controller }

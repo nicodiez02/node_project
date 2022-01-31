@@ -45,7 +45,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemPriceID) {
             <div class="d-flex w-100 align-items-center justify-content-between">
               <strong class="mb-1 product">${itemTitle.innerHTML}</strong>
 
-              <select name = "cantidad" class = "select_cart">
+              <select name = "quantity" class = "select_cart">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>

@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/', controller.login_redirect);
 router.post('/auth', controller.login_auth);
+router.get('/success', controller.get_success)
+router.get('/cancel', controller.get_cancel)
 router.post('/create_user', controller.register_createUser);
 router.post('/create-checkout-session', controller.create_checkout);
 
