@@ -4,7 +4,9 @@
 <head>
   <title>Product example · Bootstrap v5.1</title>
   <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/product/">
-  <!-- Bootstrap core CSS -->
+      <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+  <!-- Bootstrap core CSS --> 
 
   <style>
     .bd-placeholder-img {
@@ -85,9 +87,8 @@
 
           <h2 class="title">{{name}}</h2>
           <p class="price pt-2">${{price}}</p>
-          <p hidden class = "price_id">{{price_id}}</p>
-  
-          
+          <p hidden class = "price_id">{{price_key}}</p>
+
           <button id="btn_add" class="btn btn-light addToCart">Add to cart</button>
         </div>
 
@@ -102,7 +103,7 @@
           <span class="fs-5 fw-semibold"><i class="fas fa-shopping-cart"></i> Shopping Cart</span>
         </a>
 
-        <form action="/create-checkout-session" method="POST">
+        
           <div class="container_cart"></div>
 
         {{#if Loggedin}}
@@ -110,10 +111,9 @@
           <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
             <h1 class="lead fw-normal">TOTAL: <p class="lead fw-normal total"></p>
             </h1>
-            <button type="submit" id = "btn_buy" class="btn btn-primary">BUY</button>
+            <button type="button" id = "btn_buy" class="btn btn-primary">BUY</button>
           </div>
 
-        </form>
         
         {{else}}
 
@@ -261,9 +261,6 @@
           contentType: 'application/json'
         });
       });
-
-
-
     });
   </script>
 </body>

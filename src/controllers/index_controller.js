@@ -1,37 +1,31 @@
 import bcrypt from 'bcryptjs';
-import Stripe from 'stripe';
+import mercadopago from 'mercadopago'
 import { connector } from '../../public/js/mysql_connector.js'
 
 const controller = {};
+mercadopago.configure({
+    access_token: "APP_USR-1725543642332146-013116-e23cf9999e57ccd3775190d0a50ecf0c-1066155748",
+  });
 
-const stripe = new Stripe('sk_test_51K6zu2DHYsd1tSWCtdiYRbpauyGvW7h7oWioff9wrUzGKTVedETNkjlvLI6mtJdZSrbypjq6A53V26saHMtczaJV00kuQU89vK');
-let price_list, product;
-let array = [];
 
 controller.login_redirect = async (req, res) => {
     if (req.session.loggedin && req.session.rol == 'User') {
 
-        price_list = await stripe.prices.list({
-            limit: 3
-        })
-
-        for (let i = 0; i < price_list.data.length; i++) {
-            product = await stripe.prices.retrieve(price_list.data[i].id,
+        const SQL = "SELECT * FROM products";
+        connector.query(SQL, (err,result) =>{
+            if(err){
+                throw err;
+            }else{
+                res.render('products',
                 {
-                    expand: ['product']
-                });
-            array[i] = { name: product.product.name, price: product.unit_amount, price_id: product.id }
-        }
-
-        res.render('products',
-            {
-                Rol: req.session.rol,
-                Username: req.session.username,
-                Loggedin: true,
-                Productos: array
+                    Rol: req.session.rol,
+                    Username: req.session.username,
+                    Loggedin: true,
+                    Productos: result
+                }
+            );
             }
-        );
-
+        })
 
 
     } else if (req.session.loggedin) {
@@ -178,13 +172,13 @@ controller.logout = (req, res) => {
 }
 
 controller.products_noLogin = (req, res) => {
-    const SQL = "SELECT product_key, name, price, stock FROM products";
+    const SQL = "SELECT * FROM products";
 
     connector.query(SQL, (err, result) => {
         if (err) {
             console.log(err);
         } else {
-            res.render('products', { query: result })
+            res.render('products', { Products: result })
         }
     })
 }
@@ -224,31 +218,44 @@ controller.charts_view = (req, res) => {
     }
 }
 
-controller.create_checkout = async (req, res) => {
-    let values = req.body;
-    let items = [];
+controller.buy = async (req, res) => {
+    let data = req.body;
+    let items_array = [];
 
-    if(values.price_id instanceof Array){
-        for(let i = 0; i < values.price_id.length; i ++){
-            items[i] = {price: values.price_id[i], quantity: values.quantity[i]}
-        }
-    }else{
-        items = [{price: values.price_id, quantity: values.quantity}];
+    for(let i = 0; i < data.length; i++){
+        let title = data[i].title;
+        let price = Number(data[i].unit_price.replace('$', ''));
+        let quantity = Number(data[i].quantity);
+        items_array[i] = {title: title, unit_price: price, quantity: quantity};
     }
 
-    const session = await stripe.checkout.sessions.create({ 
-        line_items: items,
-        mode: 'payment',
-        success_url: 'http://localhost:3001/success',
-        cancel_url: 'http://localhost:3001/'
+    let preference = {
+		items: items_array,
+		back_urls: {
+			"success": "http://localhost:3001/products",
+			"failure": "http://localhost:3001/products",
+			"pending": "http://localhost:3001/products"
+		},
+		auto_return: "approved",
+	};
+
+    mercadopago.preferences.create(preference).then(function (response) {
+        res.send(response.body.id)
+        // res.json({
+        //     id: response.body.id
+        // });
+    }).catch(function (error) {
+        console.log(error);
     });
-    
-    res.redirect(303, session.url);
+
 }
 
-controller.get_checkout = (req,res) =>{
-    res.render('checkout');
+controller.get_success = (req,res) =>{
+    res.render('succes');
 }
 
+controller.get_cancel = (req,res) =>{
+    res.render('cancel');
+}
 
 export { controller }

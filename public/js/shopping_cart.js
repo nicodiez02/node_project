@@ -1,7 +1,7 @@
 const addToShoppingCartButtons = document.querySelectorAll('.addToCart');
 const buyButton = document.getElementById('btn_buy');
 
-// buyButton.addEventListener('click', buy);
+buyButton.addEventListener('click', buy);
 
 addToShoppingCartButtons.forEach((addToCartButton) => {
   addToCartButton.addEventListener('click', addToCartClicked);
@@ -43,9 +43,9 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemPriceID) {
 
           <div href="#" class="list-group-item list-group-item-action py-3 lh-tight cart_item" aria-current="true">
             <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1 product">${itemTitle.innerHTML}</strong>
+              <strong id = "title" class="mb-1 product">${itemTitle.innerHTML}</strong>
 
-              <select name = "cantidad" class = "select_cart">
+              <select name = "quantity" class = "select_cart">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -112,12 +112,45 @@ function buy() {
   let arrayIDs = [];
   const contenedores = document.querySelectorAll('.shoppingCartItem')
 
+  const mp = new MercadoPago("APP_USR-2963d23f-17ee-4c7f-a986-1a20f2ae84cc", {
+    locale: "es-AR",
+  });
+
   for (let i = 0; i < contenedores.length; i++) {
-    let id = contenedores[i].querySelectorAll('#id_price');
+    // let id = contenedores[i].querySelectorAll('#id_price');
+    let price = contenedores[i].querySelector('.product_price').innerText;
+    let title = contenedores[i].querySelector('#title').innerHTML;
     let quantity = contenedores[i].querySelector('.select_cart').value;
-    arrayIDs[i] = { id: id[0].innerHTML, quantity: quantity[0] };
+    arrayIDs[i] = {title: title, unit_price:price ,quantity: quantity}
   }
 
-  return arrayIDs;
-  
+  $.ajax({
+    url: 'http://localhost:3001/create-checkout-session',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(arrayIDs),
+    success: function(data){
+      mp.checkout({
+        preference: {
+          id: data,
+        },
+        autoOpen: true,
+      });
+    },
+    error: function(error){
+      console.log(error)
+    }
+  })  
 }
+
+/*
+USUARIO1:
+{"id":1066155748,"nickname":"TESTZO19J8PP","password":"qatest824","site_status":"active","email":"test_user_3919583@testuser.com"}
+
+USUARIO2
+{"id":1066163856,"nickname":"TETE5758201","password":"qatest2260","site_status":"active","email":"test_user_58217753@testuser.com"}
+
+TEST-3245432846007298-013019-768123638a90632c96015e42894b8b3e-670233031
+
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer TEST-3245432846007298-013019-768123638a90632c96015e42894b8b3e-670233031" "https://api.mercadopago.com/users/test_user" -d "{"site_id":"MLA"}"
+*/
